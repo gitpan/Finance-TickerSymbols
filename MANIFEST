@@ -1,0 +1,7 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/Finance-TickerSymbols.t
+lib/Finance/TickerSymbols.pm
+META.yml                                 Module meta-data (added by MakeMaker)

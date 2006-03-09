@@ -1,0 +1,6 @@
+Revision history for Perl extension Finance::TickerSymbols.
+
+0.01  Tue Mar  7 12:00:22 2006
+	- original version; created by h2xs 1.23 with options
+		-AX --use-new-tests -n Finance::TickerSymbols
+

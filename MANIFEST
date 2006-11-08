@@ -1,7 +1,10 @@
 Changes
+examples/dump.pl
+lib/Finance/TickerSymbols.pm
 Makefile.PL
 MANIFEST
 README
 t/Finance-TickerSymbols.t
-lib/Finance/TickerSymbols.pm
+t/pod-coverage.t
+t/pod.t
 META.yml                                 Module meta-data (added by MakeMaker)

@@ -14,7 +14,9 @@ for my $symbol ( symbols_list( 'nasdaq' ) ) {
 #    print "$Q[1] ($Q[0]) is $Q[2]\n" ;
 }
 
-NOTE: currently (version 0.01) only supports 'nasdaq', 'amex', and 'nyse' 
+NOTE: currently (version 0.01) only supports 'nasdaq', 'amex', and 'nyse'
+NOTE: the returned data depends upon availability and format of
+      external web sites. Needless to say, it is not guaranteed.
 
 
 INSTALLATION
@@ -46,7 +48,13 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 
+DISCLAIMER
+
+The data returned from these modules is in no way guaranteed, nor are
+the developers responsible in any way for how this data (or lack
+thereof) is used.
+(In other words: one can only use it on his you own risk)
+
 AUTHOR
 
 jezra@cpan.org 
-

@@ -12,13 +12,13 @@ our @ISA = qw(Exporter);
 
 our @EXPORT = 'symbols_list' ;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use LWP::Simple ;
 
-sub nasdaq_format($) {
+sub _nasdaq_format($) {
     my $url = shift ;
-    local $_ = get ( $url ) ;
+    local $_ = get ( $url ) || get( $url ) ;
     unless($_) {
         carp "couldn't read $url" ;
         return () ;
@@ -33,13 +33,13 @@ sub nasdaq_format($) {
 sub symbols_list {
 
     for (@_) {
-        /nasdaq/ix and return nasdaq_format
+        /nasdaq/ix and return _nasdaq_format
           'http://www.nasdaq.com//asp/symbols.asp?exchange=Q&start=0' ;
 
-        /amex  /ix and return nasdaq_format
+        /amex  /ix and return _nasdaq_format
           'http://www.nasdaq.com//asp/symbols.asp?exchange=1&start=0' ;
 
-        /nyse  /ix and return nasdaq_format
+        /nyse  /ix and return _nasdaq_format
           'http://www.nasdaq.com//asp/symbols.asp?exchange=N&start=0' ;
 
     }
@@ -66,9 +66,16 @@ Finance::TickerSymbols - Perl extension for getting symbols lists
 
 =head1 DESCRIPTION
 
-the function
+export the function symbols_list
+
+=over 2
+
+=item symbols_list
+
 symbols_list( 'nasdaq' | 'amex' | 'nyse' )
 returns the apropriate array of symbols.
+
+=back
 
 =head2 TODO
 
@@ -91,6 +98,13 @@ Copyright (C) 2006 by Josef Ezra
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.8 or,
 at your option, any later version of Perl 5 you may have available.
+
+=head2 NOTES
+
+- currently (version 0.01) only supports 'nasdaq', 'amex', and 'nyse'
+- the returned data depends upon availability and format of
+  external web sites. Needless to say, it is not guaranteed .
+
 
 =head1 BUGS, REQUESTS, NICE IMPLEMENTATIONS, ETC.
 

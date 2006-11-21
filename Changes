@@ -7,4 +7,8 @@ Revision history for Perl extension Finance::TickerSymbols.
 0.02 Wed Nov  8 11:57:07 EST 2006
          - CPANTS compatible 
 
+0.03 Tue Nov 21 13:34:04 EST 2006
+         - changed regular expression to match www.nasdaq.com
+           format change
+         - added the 'all' option
 

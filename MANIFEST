@@ -1,5 +1,6 @@
 Changes
-examples/dump.pl
+examples/dump_all.pl
+examples/dump_names.pl
 lib/Finance/TickerSymbols.pm
 Makefile.PL
 MANIFEST

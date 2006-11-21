@@ -12,7 +12,7 @@ our @ISA = qw(Exporter);
 
 our @EXPORT = 'symbols_list' ;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use LWP::Simple ;
 
@@ -26,25 +26,23 @@ sub _nasdaq_format($) {
 
     /\"[^\"]+\" \s*,\s*
      \"(\w+)\"  \s*,\s*
-     \"\$\d
+     .*?
+     \"\$[\d\,\.]+\"
      /xgm ;
 }
 
 sub symbols_list {
 
-    for (@_) {
-        /nasdaq/ix and return _nasdaq_format
-          'http://www.nasdaq.com//asp/symbols.asp?exchange=Q&start=0' ;
+    my $wt = shift || '?';
+    $wt eq 'nasdaq' and return _nasdaq_format 'http://www.nasdaq.com//asp/symbols.asp?exchange=Q&start=0' ;
+    $wt eq 'amex'   and return _nasdaq_format 'http://www.nasdaq.com//asp/symbols.asp?exchange=1&start=0' ;
+    $wt eq 'nyse'   and return _nasdaq_format 'http://www.nasdaq.com//asp/symbols.asp?exchange=N&start=0' ;
+    my @all = qw/nasdaq amex nyse/ ;
 
-        /amex  /ix and return _nasdaq_format
-          'http://www.nasdaq.com//asp/symbols.asp?exchange=1&start=0' ;
+    $wt eq 'all'    and return map { symbols_list ($_) } @all ;
 
-        /nyse  /ix and return _nasdaq_format
-          'http://www.nasdaq.com//asp/symbols.asp?exchange=N&start=0' ;
-
-    }
-
-    carp "bad parameter: should be nasdaq|amex|nyse" ;
+    my $should = join '|', @all, 'all' ;
+    carp "bad parameter: should be $should" ;
 }
 
 1;
@@ -59,27 +57,35 @@ Finance::TickerSymbols - Perl extension for getting symbols lists
 =head1 SYNOPSIS
 
   use Finance::TickerSymbols;
-  for my $symbol ( symbols_list('nasdaq') ) {
+  for my $symbol ( symbols_list('all') ) {
 
      # do something with this symbol
   }
 
 =head1 DESCRIPTION
 
-export the function symbols_list
+exports the function symbols_list
 
 =over 2
 
 =item symbols_list
 
-symbols_list( 'nasdaq' | 'amex' | 'nyse' )
+symbols_list( 'nasdaq' | 'amex' | 'nyse' | 'all' )
 returns the apropriate array of symbols.
 
 =back
 
 =head2 TODO
 
-more markets, I guess
+=over 2
+
+=item more markets
+
+=item get symbols by industry
+
+=item get industries list
+
+=back
 
 =head1 SEE ALSO
 

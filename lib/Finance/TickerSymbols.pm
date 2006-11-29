@@ -15,7 +15,7 @@ our @EXPORT = qw'symbols_list
                  industry_list
                 ' ;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 use LWP::Simple ;
 
@@ -65,9 +65,10 @@ sub _gimi($$) {
     }
     elsif ($prs eq 'ind' and $long) {
         my @ret ;
-        while ( m{ http\://finance\.yahoo\.com/q\?s\=([\w\.]+).*?
-                   http\://biz\.yahoo\.com/ic/.*?\"\>([^\<]+)
-             }xgs ) {push @ret, $1 . ':'. _http2name $2 }
+        while ( m{
+                   http\://biz\.yahoo\.com/ic/\d+/\d+\.html\"\>([^\<]+).*?
+                   http\://finance\.yahoo\.com/q\?s\=([\w\.]+)
+             }xgs ) {push @ret, $2 . ':'. _http2name $1 }
         return @ret
     }
     elsif ($prs eq 'ind') {

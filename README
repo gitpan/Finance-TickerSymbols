@@ -5,19 +5,23 @@ SYNOPSIS
 
 use Finance::TickerSymbols  ;
 
-for my $symbol ( symbols_list( 'nasdaq' ) ) {
+  for my $symbol ( symbols_list( 'nasdaq' ) ) {
 
-    # do something with $symbol
-    # for example:
+     # do something with $symbol
+     # for example:
 #    use Finance::YahooQuote ;
 #    my @Q = getonequote $symbol ;
 #    print "$Q[1] ($Q[0]) is $Q[2]\n" ;
-}
+  }
 
-NOTE: currently (version 0.01) only supports 'nasdaq', 'amex', and 'nyse'
-NOTE: the returned data depends upon availability and format of
-      external web sites. Needless to say, it is not guaranteed.
+  for my $industry ( industries_list()) {
 
+     for my $symbol ( industry_list($symbol) ) {
+
+         # do something with $symbol and $industry
+
+     }
+  }
 
 INSTALLATION
 
@@ -35,9 +39,9 @@ This module requires these other modules and libraries:
   LWP::Simple
 
   (Installing CPAN's LWP bundle might be a good idea, one
-  way of installing it is:
+   way of installing it is:
    % perl -MCPAN -e 'install Bundle::LWP'
-   )
+  )
   
 
 COPYRIGHT AND LICENCE
@@ -57,4 +61,4 @@ thereof) is used.
 
 AUTHOR
 
-jezra@cpan.org 
+Josef Ezra <jezra@cpan.org>

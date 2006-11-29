@@ -12,3 +12,6 @@ Revision history for Perl extension Finance::TickerSymbols.
            format change
          - added the 'all' option
 
+0.10 Wed Nov 29 11:24:17 EST 2006
+         - add industries query (biz.yahoo.com)
+         (special thanks to Laurent Cocea)

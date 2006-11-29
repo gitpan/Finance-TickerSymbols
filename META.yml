@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Finance-TickerSymbols
-version:             0.03
+version:             0.10
 abstract:            Perl extension for getting symbols lists
 license:             perl
 generated_by:        ExtUtils::MakeMaker version 6.31

@@ -15,3 +15,13 @@ Revision history for Perl extension Finance::TickerSymbols.
 0.10 Wed Nov 29 11:24:17 EST 2006
          - add industries query (biz.yahoo.com)
          (special thanks to Laurent Cocea)
+
+0.11 same day
+         - bugfix
+
+1.00 Thu Nov 30 16:45:06 EST 2006
+         - documentation fix (thank you Robert)
+         - hopefully it's mature enough to become 1.00
+         
+
+

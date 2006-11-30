@@ -15,13 +15,15 @@ our @EXPORT = qw'symbols_list
                  industry_list
                 ' ;
 
-our $VERSION = '0.11';
+our $VERSION = '1.00';
 
 use LWP::Simple ;
 
 our $long;
 
 my %inds ;
+
+sub _carp($) { carp $_[0] ; ()}
 
 sub _http2name($){
     my  $n = shift ;
@@ -37,11 +39,7 @@ sub _http2name($){
 sub _gimi($$) {
     my ($prs, $url) = @_ ;
 
-    local $_ = get ( $url ) || get( $url ) ;
-    unless($_) {
-        carp "couldn't read $url" ;
-        return () ;
-    }
+    local $_ = get ( $url ) || get( $url ) or return _carp "couldn't read $url" ;
 
     if ($prs eq 'nas' and $long) {
 
@@ -94,10 +92,7 @@ sub symbols_list($) {
     my @all = qw/nasdaq amex nyse/ ;
     $wt eq 'all'    and return map { symbols_list ($_) } @all ;
 
-    $wt =~ /^i(?:):(.+)$/   and return _gimi i => 
-
-    carp "bad parameter: should be " . join '|', @all, 'all' ;
-    ()
+    return _carp "bad parameter: should be " . join '|', @all, 'all' ;
 }
 
 sub industries_list { _gimi inds => 'http://biz.yahoo.com/ic/ind_index.html' }
@@ -105,11 +100,8 @@ sub industries_list { _gimi inds => 'http://biz.yahoo.com/ic/ind_index.html' }
 sub industry_list($) {
     %inds or industries_list() ;
     my $name = shift ;
-    my $n = $inds{$name} ;
-    unless (defined $n) {
-        carp "'$name' is not recognized" ;
-        return ()
-    }
+    my $n = $inds{$name} or return _carp "'$name' is not recognized" ;
+
     my $p = 'pub' ; # shift || ''; $p = 'pub' unless $p eq 'prv' or $p eq 'all' ;
                     # ?? TODO ??
                     # support Private/Foreign ? what for?
@@ -135,7 +127,7 @@ Finance::TickerSymbols - Perl extension for getting symbols lists
 
   for my $industry ( industries_list()) {
 
-     for my $symbol ( industry_list($symbol) ) {
+     for my $symbol ( industry_list( $industry ) ) {
 
          # do something with $symbol and $industry
 

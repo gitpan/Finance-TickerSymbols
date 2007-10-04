@@ -15,15 +15,13 @@ our @EXPORT = qw'symbols_list
                  industry_list
                 ' ;
 
-our $VERSION = '1.00';
-
-use LWP::Simple ;
+our $VERSION = '1.01';
 
 our $long;
 
 my %inds ;
 
-sub _carp($) { carp $_[0] ; ()}
+sub _carp(@) { carp "@_\n" ; ()}
 
 sub _http2name($){
     my  $n = shift ;
@@ -36,10 +34,21 @@ sub _http2name($){
     $n
 }
 
-sub _gimi($$) {
-    my ($prs, $url) = @_ ;
+my  $_brws ;
+sub  _brws(@) {
+    use LWP ;
+    $_brws ||= new LWP::UserAgent() ;
+    my $res = $_brws->get(@_) ;
+    return $res -> content() if $res -> is_success() ;
+    $res = $_brws->get(@_) ;
+    return $res -> content() if $res -> is_success() ;
+    return _carp "download (@_):", $res->status_line() ;
+}
 
-    local $_ = get ( $url ) || get( $url ) or return _carp "couldn't read $url" ;
+sub _gimi($$;@) {
+    my $prs = shift ;
+
+    local $_ = _brws(@_) or return ;
 
     if ($prs eq 'nas' and $long) {
 

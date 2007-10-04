@@ -36,14 +36,12 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  LWP::Simple
+  LWP
 
-  (Installing CPAN's LWP bundle might be a good idea, one
-   way of installing it is:
+  (one way of installing LWP bundle is:
    % perl -MCPAN -e 'install Bundle::LWP'
   )
   
-
 COPYRIGHT AND LICENCE
 
 Copyright (C) 2006 by Josef Ezra

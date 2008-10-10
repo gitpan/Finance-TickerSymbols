@@ -15,7 +15,7 @@ our @EXPORT = qw'symbols_list
                  industry_list
                 ' ;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 our $long;
 
@@ -38,6 +38,7 @@ my  $_brws ;
 sub  _brws(@) {
     use LWP ;
     $_brws ||= new LWP::UserAgent() ;
+    $_brws -> env_proxy() ;
     my $res = $_brws->get(@_) ;
     return $res -> content() if $res -> is_success() ;
     $res = $_brws->get(@_) ;
@@ -128,6 +129,7 @@ Finance::TickerSymbols - Perl extension for getting symbols lists
 
 =head1 SYNOPSIS
 
+
   use Finance::TickerSymbols;
   for my $symbol ( symbols_list('all') ) {
 
@@ -171,6 +173,16 @@ setting $Finance::TickerSymbols::long to non-false would attach company name to 
 
 =back
 
+=head2 PROXY
+
+Users may define proxy using environment variables.
+examples (from LWP::UserAgent manuel):
+
+      gopher_proxy=http://proxy.my.place/
+      wais_proxy=http://proxy.my.place/
+      no_proxy="localhost,my.domain"
+
+
 =head2 TODO
 
 =over 2
@@ -181,7 +193,7 @@ setting $Finance::TickerSymbols::long to non-false would attach company name to 
 
 =head1 SEE ALSO
 
-  LWP::Simple
+  LWP
   http://quotes.nasdaq.com
   http://biz.yahoo.com/ic
   Finance::*

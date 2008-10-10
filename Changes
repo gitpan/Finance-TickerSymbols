@@ -23,5 +23,7 @@ Revision history for Perl extension Finance::TickerSymbols.
          - documentation fix (thank you Robert)
          - hopefully it's mature enough to become 1.00
          
-
+1.02 Fri Oct 10 10:16:00 EST 2008
+           [reported and solved by Steffen Netz - Thank you]
+         - support proxy via environment variables
 

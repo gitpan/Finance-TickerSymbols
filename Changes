@@ -27,3 +27,7 @@ Revision history for Perl extension Finance::TickerSymbols.
            [reported and solved by Steffen Netz - Thank you]
          - support proxy via environment variables
 
+1.03 Mon May  3 12:32:28 EDT 2010
+           [reported and solved by Martin Hurford - Thank you]
+          - adjust to http://www.nasdaq.com format changes
+

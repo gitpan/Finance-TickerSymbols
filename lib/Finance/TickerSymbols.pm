@@ -15,7 +15,7 @@ our @EXPORT = qw'symbols_list
                  industry_list
                 ' ;
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 our $long;
 
@@ -52,24 +52,20 @@ sub _gimi($$;@) {
     local $_ = _brws(@_) or return ;
 
     if ($prs eq 'nas' and $long) {
-
         my @ret ;
-        while (
-          m/\"([^\"]+)\"\s*,\s*
-             \"(\w+)\"  \s*,\s*
-             .*?
-             \"\$[\d\,\.]+\"
-           /xgm ) { push @ret, "$2:$1"}
+        while ( m/^
+                  \s* \" ([\w+\.]+) \" \s* \,
+                  \s* \" (.*? (?:[^\\] | \\ \\ )) \"
+                 /xgm ) { push @ret, "$1:$2" }
+        shift  @ret if @ret and $ret[0] eq 'Symbol:Name' ;
         return @ret
     }
     elsif ($prs eq 'nas') {
-
-        return
-          m/\"[^\"]+\" \s*,\s*
-            \"(\w+)\"  \s*,\s*
-            .*?
-            \"\$[\d\,\.]+\"
-           /xgm ;
+        my @ret ;
+        while (m/^ \s* \" ([\w+\.]+) \"
+                /xgm ) { push @ret, $1 }
+        shift  @ret if @ret and $ret[0] eq 'Symbol' ;
+        return @ret ;
     }
     elsif ($prs eq 'ind' and $long) {
         my @ret ;
@@ -96,12 +92,12 @@ sub _gimi($$;@) {
 sub symbols_list($) {
 
     my $wt = shift || '?';
-    $wt eq 'nasdaq' and return _gimi nas => 'http://www.nasdaq.com//asp/symbols.asp?exchange=Q&start=0' ;
-    $wt eq 'amex'   and return _gimi nas => 'http://www.nasdaq.com//asp/symbols.asp?exchange=1&start=0' ;
-    $wt eq 'nyse'   and return _gimi nas => 'http://www.nasdaq.com//asp/symbols.asp?exchange=N&start=0' ;
+    $wt eq 'nasdaq' and return _gimi nas => 'http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nasdaq&render=download' ;
+    $wt eq 'amex'   and return _gimi nas => 'http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=amex&render=download' ;
+    $wt eq 'nyse'   and return _gimi nas => 'http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nyse&render=download' ;
+
     my @all = qw/nasdaq amex nyse/ ;
     $wt eq 'all'    and return map { symbols_list ($_) } @all ;
-
     return _carp "bad parameter: should be " . join '|', @all, 'all' ;
 }
 

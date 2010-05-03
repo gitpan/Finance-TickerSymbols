@@ -1,14 +1,22 @@
 --- #YAML:1.0
-name:                Finance-TickerSymbols
-version:             1.02
-abstract:            Perl extension for getting symbols lists
-license:             perl
-generated_by:        ExtUtils::MakeMaker version 6.31
-distribution_type:   module
-requires:     
-    LWP:                           5
-meta-spec:
-    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
-    version: 1.2
+name:               Finance-TickerSymbols
+version:            1.03
+abstract:           Perl extension for getting symbols lists
 author:
     - Josef Ezra <jezra@cpan.org>
+license:            perl
+distribution_type:  module
+configure_requires:
+    ExtUtils::MakeMaker:  0
+build_requires:
+    ExtUtils::MakeMaker:  0
+requires:
+    LWP:  5
+no_index:
+    directory:
+        - t
+        - inc
+generated_by:       ExtUtils::MakeMaker version 6.55_02
+meta-spec:
+    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:  1.4

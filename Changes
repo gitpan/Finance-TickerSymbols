@@ -31,3 +31,7 @@ Revision history for Perl extension Finance::TickerSymbols.
            [reported and solved by Martin Hurford - Thank you]
           - adjust to http://www.nasdaq.com format changes
 
+1.04 Wed May  8 - 2013
+           [reported and solved by Matt W via RT]
+          - eliminate warning at premature use of prototyped function
+          

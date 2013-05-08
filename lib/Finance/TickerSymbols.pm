@@ -15,7 +15,7 @@ our @EXPORT = qw'symbols_list
                  industry_list
                 ' ;
 
-our $VERSION = '1.03';
+our $VERSION = '1.04';
 
 our $long;
 
@@ -89,6 +89,7 @@ sub _gimi($$;@) {
     }
 }
 
+sub symbols_list($);
 sub symbols_list($) {
 
     my $wt = shift || '?';

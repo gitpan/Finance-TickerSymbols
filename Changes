@@ -35,3 +35,6 @@ Revision history for Perl extension Finance::TickerSymbols.
            [reported and solved by Matt W via RT]
           - eliminate warning at premature use of prototyped function
           
+1.041 Fri May 10 - 2013
+          - fix syntax warning in a test
+

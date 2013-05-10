@@ -15,7 +15,7 @@ our @EXPORT = qw'symbols_list
                  industry_list
                 ' ;
 
-our $VERSION = '1.04';
+our $VERSION = '1.041';
 
 our $long;
 

@@ -13,10 +13,10 @@ BEGIN { use_ok('Finance::TickerSymbols') };
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-for my $market qw( nasdaq
-                   amex
-                   nyse
-                 ) {
+for my $market (qw/ nasdaq
+                    amex
+                    nyse
+                  /) {
     # don't forget to increase last test while adding more markets .. # 
 
     # make sure we have at list 101 symbols in the array

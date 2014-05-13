@@ -15,7 +15,7 @@ our @EXPORT = qw'symbols_list
                  industry_list
                 ' ;
 
-our $VERSION = '1.041';
+our $VERSION = '2.01';
 
 our $long;
 
@@ -34,14 +34,24 @@ sub _http2name($){
     $n
 }
 
-my  $_brws ;
-sub  _brws(@) {
+my  $_ua ;
+sub  _ua() {
     use LWP ;
-    $_brws ||= new LWP::UserAgent() ;
-    $_brws -> env_proxy() ;
-    my $res = $_brws->get(@_) ;
+    # use HTTP::Cookies;
+    # use File::Temp 'tempfile' ;
+    # my $ua = new LWP::UserAgent(Accept => "text/html, */*;q=0.1", referer => 'http://google.com') ;
+    my $ua = new LWP::UserAgent() ;
+    $ua -> env_proxy() ;
+    # $ua -> cookie_jar( new HTTP::Cookies (file => tempfile()));
+    $ua -> agent("");
+    $ua
+}
+
+sub  _brws(@) {
+    $_ua ||= _ua() ;
+    my $res = $_ua->get(@_) ;
     return $res -> content() if $res -> is_success() ;
-    $res = $_brws->get(@_) ;
+       $res = $_ua->get(@_) ;
     return $res -> content() if $res -> is_success() ;
     return _carp "download (@_):", $res->status_line() ;
 }
@@ -89,16 +99,18 @@ sub _gimi($$;@) {
     }
 }
 
-sub symbols_list($);
+sub _gimi_nasdaq($) {
+    my $url = 'http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=' . shift ;
+    # my $dummy = _brws($url);
+    _gimi nas => $url . '&render=download';
+}
+
 sub symbols_list($) {
 
     my $wt = shift || '?';
-    $wt eq 'nasdaq' and return _gimi nas => 'http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nasdaq&render=download' ;
-    $wt eq 'amex'   and return _gimi nas => 'http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=amex&render=download' ;
-    $wt eq 'nyse'   and return _gimi nas => 'http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nyse&render=download' ;
-
     my @all = qw/nasdaq amex nyse/ ;
-    $wt eq 'all'    and return map { symbols_list ($_) } @all ;
+    return _gimi_nasdaq uc $wt            if grep {$_ eq $wt } @all ;
+    return map {_gimi_nasdaq uc $_ } @all if $wt eq 'all';
     return _carp "bad parameter: should be " . join '|', @all, 'all' ;
 }
 

@@ -38,3 +38,6 @@ Revision history for Perl extension Finance::TickerSymbols.
 1.041 Fri May 10 - 2013
           - fix syntax warning in a test
 
+2.01  Tue May 13 - 2014
+          - adjust to http://www.nasdaq.com refusal to serve perl agenss. Is
+            that the humble beginning of a brain war? 
